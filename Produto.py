@@ -27,5 +27,8 @@ def localizaProduto(RidProduto):
 
 produtos = []
 
+#INSERTS INICIAIS
 produtos.append(('1','Padrão','150','1','Outros'))
+produtos.append(('2','Memoria RAM DDR3 8GB','150','1','Outros'))
+produtos.append(('3','Memoria RAM DDR3 16GB','250','1','Outros'))
 

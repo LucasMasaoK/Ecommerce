@@ -27,9 +27,13 @@ def addItem():
             vendas.append((numeroVenda, 1, vendasItens, precoTotal))
             print('Venda finalizada com sucesso')
             print(f'{numeroVenda}, {1}, {vendasItens}, {precoTotal}')
+            log(numeroVenda, 1, vendasItens, precoTotal)
             break
 
-
+def log(numeroVenda,cliente,vendasItens,precoTotal):
+    log=open('log.txt','w')
+    log.write(f'Numero da venda:{numeroVenda} Cliente:{cliente}, Itens da venda: {vendasItens}, Preco Total: {precoTotal}\n')
+    log.close()
 
 
 def GerarIDVenda():

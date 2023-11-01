@@ -1,0 +1,1 @@
+Numero da venda:1 Cliente:1, Itens da venda: [(1, 1, 150.0, 150.0)], Preço Total: 150.0
