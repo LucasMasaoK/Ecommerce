@@ -17,13 +17,15 @@ def precoProduto(RidProduto):
 def localizaProduto(RidProduto):
     for i in range(0,len(produtos)):
        listaProdutos=list(produtos[i])
-       print(listaProdutos)
        for produto in produtos:
           idProduto,nome,preco,idFornecedor,marca=produto
           if int(idProduto)==RidProduto:
             return int(idProduto)
 
-
+def mostrarProdutos():
+    for produto in produtos:
+        idProduto, nome, preco, idFornecedor, marca = produto
+        print(f'ID:{idProduto} - Descrição:{nome} - Preço:R${preco}')
 
 produtos = []
 

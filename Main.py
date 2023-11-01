@@ -2,10 +2,12 @@ import Fornecedor
 import Usuario
 import Venda
 import Produto
+import Relatorios
 
 
 def menu():
     print('1 - Venda')
+    print('2 - Relatório')
     inputUsuario=int(input('Digite a opção escolhida:'))
     return inputUsuario
 
@@ -17,9 +19,13 @@ _usuarioLogado=Usuario.login()
 
 
 if _usuarioLogado:
-    inputUsuario = menu()
+    while True:
+        inputUsuario = menu()
+        if inputUsuario == 1:
+            Venda.addItem()
+            continue
+        if inputUsuario == 2:
+            Relatorios.vendasPorCliente(1)
 else:
     exit()
 
-if inputUsuario==1:
-    Venda.addItem()

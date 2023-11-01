@@ -4,13 +4,14 @@ def addItem():
     sair = False
     precoTotal = 0
     while sair!=True:
+        Produto.mostrarProdutos()
         idProduto=int(input('Digite o ID do produto:'))
         if Produto.localizaProduto(idProduto)>0:
             qtde = int(input('Digite a quantidade:'))
             precoUnid = Produto.precoProduto(idProduto)
             precoItemTotal = qtde * precoUnid
             precoTotal = precoTotal + precoItemTotal
-            vendasItens.append((idProduto, qtde, precoUnid, precoItemTotal))
+            vendasItensTemp.append((idProduto, qtde, precoUnid, precoItemTotal))
             print(f'Produto adicionado a venda com sucesso!')
         print(f'1- Adicionar Mais itens\n'
                         f'2- Ver itens da venda\n'
@@ -20,14 +21,15 @@ def addItem():
             continue
         elif escolha == 2:
             print(f'Itens da venda')
-            print(vendasItens)
+            print(vendasItensTemp)
             continue
         elif escolha == 3:
             numeroVenda=GerarIDVenda()#cliente
-            vendas.append((numeroVenda, 1, vendasItens, precoTotal))
+            vendasItens.append((numeroVenda, idProduto, qtde, precoUnid, precoItemTotal))
+            vendas.append((numeroVenda, 1, vendasItensTemp, precoTotal))
             print('Venda finalizada com sucesso')
-            print(f'{numeroVenda}, {1}, {vendasItens}, {precoTotal}')
-            log(numeroVenda, 1, vendasItens, precoTotal)
+            print(f'{numeroVenda}, {1}, {vendasItensTemp}, {precoTotal}')
+            log(numeroVenda, 1, vendasItensTemp, precoTotal)
             break
 
 def log(numeroVenda,cliente,vendasItens,precoTotal):
@@ -40,5 +42,5 @@ def GerarIDVenda():
     return len(vendas)
 
 vendasItens=[]
+vendasItensTemp=[]
 vendas = []
-vendas.append('Padrão')
