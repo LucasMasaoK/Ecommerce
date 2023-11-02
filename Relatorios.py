@@ -4,10 +4,10 @@ def vendasPorCliente(idCliente):
     vendasTupla=Venda.vendas
     vendasList=[]
     for i in range(0,len(vendasTupla)):
-        vendasList.append(list(Venda.vendas[i]))
-        if idCliente in vendasList:
-            for venda in Venda.vendas[i]:
+        vendasList.append(list(vendasTupla[i]))
+        if idCliente in vendasList[i]:
+            for venda in vendasList:
                 numeroVenda,cliente, vendasItensTemp, precoTotal=venda
-                print(f'{numeroVenda},{cliente}, {vendasItensTemp}, {precoTotal}')
+                print(f'{numeroVenda},{cliente}, {vendasItensTemp}, {precoTotal}\n')
 
 

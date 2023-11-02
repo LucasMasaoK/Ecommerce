@@ -44,3 +44,4 @@ def GerarIDVenda():
 vendasItens=[]
 vendasItensTemp=[]
 vendas = []
+

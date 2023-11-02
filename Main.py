@@ -16,8 +16,6 @@ Fornecedor.CadastroFornecedor(Fornecedor.GerarIDFornecedor(),'Magazine Luizo','4
 
 
 _usuarioLogado=Usuario.login()
-
-
 if _usuarioLogado:
     while True:
         inputUsuario = menu()
