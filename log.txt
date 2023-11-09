@@ -1,1 +1,1 @@
-Numero da venda:0 Cliente:1, Itens da venda: [(2, 1, 150.0, 150.0), (2, 2, 150.0, 300.0)], Preco Total: 450.0
+Numero da venda:0 Cliente:1, Itens da venda: [(2, 1, 150.0, 150.0)], Preco Total: 150.0

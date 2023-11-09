@@ -1,5 +1,7 @@
-def CadastroFornecedor(idFornecedor,nome,cnpj):
-    fornecedores.append((idFornecedor,nome,cnpj))
+def CadastroFornecedor():
+    nome=input('Digite o nome do Fornecedor:')
+    cnpj=input('Digite o CNPJ:')
+    fornecedores.append((GerarIDFornecedor(),nome,cnpj))
     return print(f'O {nome} foi cadastrado com sucesso!')
 
 def GerarIDFornecedor():
