@@ -7,12 +7,12 @@ import Relatorios
 
 
 def menu():
-    print('1 - Venda')
-    print('2 - Criar Produto')
-    print('3 - Relatório')
-    print('4 - Criar Fornecedor')
-    print('5 - Criar Usuário')
-    print('6 - Trocar Usuário')
+    print('1 - Comprar')
+    print('2 - Produtos')
+    print('4 - Relatório')
+    print('5 - Criar Fornecedor')
+    print('6 - Criar Usuário')
+    print('7 - Trocar Usuário')
     inputUsuario=int(input('Digite a opção escolhida: '))
     return inputUsuario
 
@@ -30,14 +30,14 @@ if _usuarioLogado:
             Venda.addItem()
             continue
         elif inputUsuario == 2:
-            Relatorios.vendasPorCliente(1)
-        elif inputUsuario == 3:
+            Produto.editarProdutos()
+        elif inputUsuario == 5:
             nome_fornecedor = input("Digite o nome do fornecedor: ")
             cnpj = input("Digite o CNPJ do fornecedor: ")
             Fornecedor.CadastroFornecedor(Fornecedor.GerarIDFornecedor(), nome_fornecedor, cnpj)
-        elif inputUsuario == 5:
-            Usuario.criar_usuario()
         elif inputUsuario == 6:
+            Usuario.criar_usuario()
+        elif inputUsuario == 7:
             Usuario.login()
 else:
     exit()
