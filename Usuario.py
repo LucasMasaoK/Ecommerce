@@ -1,4 +1,4 @@
-from prettytable import PrettyTable
+
 usuarios = {"thiago": ["3112"]}
 logado= ["log"]
 def login():
