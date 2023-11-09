@@ -2,90 +2,38 @@ import Fornecedor
 import Usuario
 import Venda
 import Produto
-import Cliente
-import Relatorios
+
+
 
 def menu():
-    print("--------E-COMMERCE DE VENDAS------------")
-    print("-----------MENU DE OPÇÕES-----------")
-    print("(1) - Fornecedor")
-    print("(2) - Produto")
-    print("(3) - Cliente")
-    print("(4) - Venda")
-    print("(5) - Relatório")
-    inputUsuario=int(input('Digite a opção escolhida:'))
+    print('1 - Comprar')
+    print('2 - Produtos')
+    print('4 - Relatório')
+    print('5 - Criar Fornecedor')
+    print('6 - Trocar Usuário')
+    inputUsuario=int(input('Digite a opção escolhida: '))
     return inputUsuario
 
-def subMenuFornecedor():
-    while True:
-        print('\n-----------FORNECEDOR-----------')
-        print("(1) - Adicionar")
-        print("(2) - Remover")
-        print("(3) - Listar")
-        print("(4) - Menu Principal")
-        inputUsuario=int(input('Digite a opção escolhida:'))
-        if inputUsuario==1:
-            Fornecedor.CadastroFornecedor()
-            continue
-        elif inputUsuario == 2:
-            continue
-        elif inputUsuario == 3:
-            continue
-        elif inputUsuario == 4:
-            break
-
-def subMenuProduto():
-    print('\n-----------PRODUTO-----------')
-    print("(1) - Adicionar")
-    print("(2) - Remover")
-    print("(3) - Listar")
-    print("(4) - Menu Principal")
-    inputUsuario = int(input('Digite a opção escolhida:'))
-
-def subMenuCliente():
-    print('\n-----------CLIENTE-----------')
-    print("(1) - Adicionar")
-    print("(2) - Remover")
-    print("(3) - Listar")
-    print("(4) - Menu Principal")
-    inputUsuario = int(input('Digite a opção escolhida:'))
-
-def subMenuVenda():
-    print('\n-----------VENDA-----------')
-    print("(1) - Adicionar")
-    print("(2) - Remover")
-    print("(3) - Listar")
-    print("(4) - Menu Principal")
-    inputUsuario = int(input('Digite a opção escolhida:'))
-
-def subMenuRelatório():
-    print("(1) - Cadastrar Produto")
-    print("(2) - Mostrar Produto")
-    print("(3) - Vender produto")
-    print("(4) - Acessar carrinho")
-    inputUsuario = int(input('Digite a opção escolhida:'))
-
-
+Fornecedor.CadastroFornecedor(Fornecedor.GerarIDFornecedor(),'Mercado Livre','01.216.614/0001-78')
+Fornecedor.CadastroFornecedor(Fornecedor.GerarIDFornecedor(),'Magazine Luizo','44.714.778/0001-38')
+Fornecedor.CadastroFornecedor(Fornecedor.GerarIDFornecedor(),'Max Steel','45.714.778/0001-38')
 
 _usuarioLogado=Usuario.login()
 
-while True:
-    if _usuarioLogado:
+
+if _usuarioLogado:
+    while True:
         inputUsuario = menu()
-    else:
-        exit()
-
-    if inputUsuario==1:
-        subMenuFornecedor()
-
-    elif inputUsuario == 2:
-        subMenuProduto()
-    elif inputUsuario == 3:
-
-        RidCliente = input('Digite um ID:')
-        Cliente.LocalizaCliente(RidCliente)
-    elif inputUsuario == 4:
-        subMenuVenda()
-    elif inputUsuario == 5:
-        subMenuRelatório()
-        Relatorios.vendasPorCliente(1)
+        if inputUsuario == 1:
+            Venda.addItem()
+            continue
+        elif inputUsuario == 2:
+            Produto.editarProdutos()
+        elif inputUsuario == 5:
+            nome_fornecedor = input("Digite o nome do fornecedor: ")
+            cnpj = input("Digite o CNPJ do fornecedor: ")
+            Fornecedor.CadastroFornecedor(Fornecedor.GerarIDFornecedor(), nome_fornecedor, cnpj)
+        elif inputUsuario == 6:
+            Usuario.login()
+else:
+    exit()
