@@ -23,7 +23,12 @@ def removerFornecedor():
        for fornecedor in fornecedores:
           codigo,nome,cnpj=fornecedor
           if codigo==idFornecedor:
-            fornecedores.remove(idFornecedor)
+            fornecedores.pop(idFornecedor)
+            return print(f'Fornecedor {nome} foi removido com sucesso!')
+
+def editarFornecedor():
+    listarFornecedor()
+
 
 def listarFornecedor():
     print(fornecedores)
@@ -34,4 +39,3 @@ fornecedores.append(('0','Padrão','00000000000'))
 fornecedores.append((GerarIDFornecedor(),'Mercado Livre','01.216.614/0001-78'))
 fornecedores.append((GerarIDFornecedor(),'Magazine Luizo','44.714.778/0001-38'))
 fornecedores.append((GerarIDFornecedor(),'Max Steel','45.714.778/0001-38'))
-

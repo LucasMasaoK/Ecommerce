@@ -1,4 +1,3 @@
-
 usuarios = {"thiago": ["3112"]}
 logado= ["log"]
 def login():
