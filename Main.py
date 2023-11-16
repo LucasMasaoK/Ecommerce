@@ -59,7 +59,7 @@ def subMenuVenda():
         print("(4) - Menu Principal")
         inputUsuario = int(input('Digite a opção escolhida:'))
         if inputUsuario == 1:
-            Venda.addItem()
+            Venda.subMenu()
             continue
         elif inputUsuario == 2:
             continue
