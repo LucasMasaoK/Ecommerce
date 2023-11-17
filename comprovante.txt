@@ -1,4 +1,0 @@
-Nome do Produto: Memoria RAM DDR3 8GB
-Quantidade: 5
-Preço Total do Produto: R$750.0
-------------------------------

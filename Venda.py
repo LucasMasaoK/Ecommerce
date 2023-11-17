@@ -12,6 +12,7 @@ def addItem():
                 Produto.produtos[idProduto][4]=estoque-qtde
                 precoUnid = Produto.produtos[idProduto][1]
                 precoItemTotal = qtde * precoUnid
+
                 with open('comprovante.txt', 'a') as arquivocomprovante:
                     arquivocomprovante.write(f'Nome do Produto: {Produto.produtos[idProduto][0]}\n')
                     arquivocomprovante.write(f'Quantidade: {qtde}\n')
@@ -72,8 +73,6 @@ def limparComprovante():
         print('Comprovante limpo com sucesso!')
     except FileNotFoundError:
         print('Arquivo comprovante.txt não encontrado.')
-
-precoTotal = 0.0
 
 try:
     with open('comprovante.txt', 'w') as arquivo_comprovante:
