@@ -1,4 +1,4 @@
-import Fornecedor
+from Fornecedor import fornecedorController
 import Usuario
 import Venda
 import Produto
@@ -25,14 +25,15 @@ def subMenuFornecedor():
         print("(3) - Listar")
         print("(4) - Menu Principal")
         inputUsuario=int(input('Digite a opção escolhida:'))
+        oFornecedorController = fornecedorController()
         if inputUsuario==1:
-            Fornecedor.CadastroFornecedor()
-            continue
+            fornecedorController.adicionar()
+
         elif inputUsuario == 2:
-            Fornecedor.removerFornecedor()
+
             continue
         elif inputUsuario == 3:
-            Fornecedor.listarFornecedor()
+            continue
         elif inputUsuario == 4:
             break
         else:
