@@ -1,7 +1,8 @@
 from Fornecedor import fornecedorController
+from Produto import produtosController
 import Usuario
 import Venda
-import Produto
+
 import Cliente
 import Relatorios
 
@@ -28,9 +29,7 @@ def subMenuFornecedor():
         oFornecedorController = fornecedorController()
         if inputUsuario==1:
             fornecedorController.adicionar()
-
         elif inputUsuario == 2:
-
             continue
         elif inputUsuario == 3:
             continue
@@ -40,7 +39,23 @@ def subMenuFornecedor():
             print('Opção inválida, tente novamente')
 
 def subMenuProduto():
-    Produto.editarProdutos()
+    while True:
+        print('\n-----------PRODUTOS-----------')
+        print("(1) - Adicionar")
+        print("(2) - Remover")
+        print("(3) - Listar")
+        print("(4) - Menu Principal")
+        oProdutoController=produtosController()
+        inputUsuario = int(input('Digite a opção escolhida:'))
+        if inputUsuario == 1:
+            oProdutoController.adicionarProduto()
+            continue
+        elif inputUsuario == 2:
+            continue
+        elif inputUsuario == 3:
+            continue
+        elif inputUsuario == 4:
+            break
 
 
 def subMenuCliente():
