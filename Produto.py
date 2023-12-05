@@ -34,4 +34,38 @@ class produtosController:
             VALUES ('%s', '%s', '%s', '%s', '%s')""" % params)
         self.connect.commit()
         print(f'O {oProduto.nome} foi cadastrado com sucesso!')
-    
+
+    def buscarProduto(self):
+        acho=''
+        params = input("Digite o ID do Produto: ")
+        query=self.cursor.execute("""SELECT * FROM PRODUTOS WHERE ID_PRODUTO= '%s' """ % params)
+        for produto in query:
+            if produto[0] == int(params):
+                print(
+                    f"Professor encontrado - ID: {produto[0]}, Nome: {produto[1]}, VL Venda: {produto[4]}")
+                acho = True
+                break
+            if acho != True:
+                print(f"Professor com ID {params} não encontrado.")
+
+    def listarProdutos(self):
+        query = self.cursor.execute("""SELECT * FROM PRODUTOS """)
+        for produto in query:
+            print(
+                    f"ID: {produto[0]}, Nome: {produto[2]}, VL Venda: {produto[4]}")
+
+    def removerProduto(self):
+        acho = ''
+        params = input("Digite o ID do Produto: ")
+        query = self.cursor.execute("""SELECT * FROM PRODUTOS WHERE ID_PRODUTO='%s'""" % params)
+        for produto in query:
+            if produto[0] == int(params):
+                query = self.cursor.execute("""DELETE FROM PRODUTOS WHERE ID_PRODUTO='%s'""" % params)
+                print(
+                    f"Produto Removido - ID: {produto[0]}, Nome: {produto[1]}, VL Venda: {produto[4]}")
+                self.connect.commit()
+                acho = True
+                break
+            if acho != True:
+                print(f"Produto com ID {params} não encontrado.")
+

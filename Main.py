@@ -51,8 +51,10 @@ def subMenuProduto():
             oProdutoController.adicionarProduto()
             continue
         elif inputUsuario == 2:
+            oProdutoController.removerProduto()
             continue
         elif inputUsuario == 3:
+            oProdutoController.listarProdutos()
             continue
         elif inputUsuario == 4:
             break
