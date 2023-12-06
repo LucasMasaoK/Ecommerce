@@ -44,7 +44,8 @@ def subMenuProduto():
         print("(1) - Adicionar")
         print("(2) - Remover")
         print("(3) - Listar")
-        print("(4) - Menu Principal")
+        print("(4) - Editar")
+        print("(5) - Menu Principal")
         oProdutoController=produtosController()
         inputUsuario = int(input('Digite a opção escolhida:'))
         if inputUsuario == 1:
@@ -57,7 +58,8 @@ def subMenuProduto():
             oProdutoController.listarProdutos()
             continue
         elif inputUsuario == 4:
-            break
+            oProdutoController.editarProduto()
+            continue
 
 
 def subMenuCliente():

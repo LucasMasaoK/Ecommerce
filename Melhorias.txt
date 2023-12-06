@@ -1,0 +1,2 @@
+- Exception para INSERT ID duplicado
+- Implantar Update
