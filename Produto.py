@@ -1,5 +1,5 @@
 import sqlite3
-
+from Fornecedor import fornecedorController
 class TProduto:
     def __init__(self,pID_produto,pID_fornecedor,pNome,pEstoque,pVL_venda):
         self.id_produto=pID_produto
@@ -35,18 +35,16 @@ class produtosController:
         self.connect.commit()
         print(f'O {oProduto.nome} foi cadastrado com sucesso!')
 
-    def buscarProduto(self):
+    def buscarProduto(self,pID):
         acho=''
-        params = input("Digite o ID do Produto: ")
-        query=self.cursor.execute("""SELECT * FROM PRODUTOS WHERE ID_PRODUTO= '%s' """ % params)
+        query=self.cursor.execute("""SELECT * FROM PRODUTOS WHERE ID_PRODUTO= '%s' """ % pID)
         for produto in query:
-            if produto[0] == int(params):
-                print(
-                    f"Produto encontrado - ID: {produto[0]}, Nome: {produto[1]}, VL Venda: {produto[4]}")
+            if produto[0] == int(pID):
                 acho = True
+                return True
                 break
             if acho != True:
-                print(f"Produto com ID {params} não encontrado.")
+                return False
 
     def listarProdutos(self):
         query = self.cursor.execute("""SELECT * FROM PRODUTOS """)
@@ -72,27 +70,38 @@ class produtosController:
     def editarProduto(self):
         self.listarProdutos()
         cID=input('Digite o ID do Produto:')
-        while True:
-            print('\n-----------EDITAR-----------')
-            print("(1) - Nome")
-            print("(2) - Fornecedor")
-            print("(3) - Quantidade")
-            print("(4) - Valor")
-            print("(5) - Cancelar")
-            inputUsuario = int(input('Digite a opção escolhida:'))
-            cNovo = input('Digite o novo valor: ')
-            params=(cNovo,cID)
-            if inputUsuario == 1:
-                self.cursor.execute("""UPDATE PRODUTOS SET nome= '%s' WHERE ID_PRODUTO='%s'""" % params)
-
-            elif inputUsuario == 2:
-                self.cursor.execute("""UPDATE PRODUTOS SET id_fornecedor= '%s' WHERE ID_PRODUTO='%s'""" % params)
-            elif inputUsuario == 3:
-                self.cursor.execute("""UPDATE PRODUTOS SET estoque= '%s' WHERE ID_PRODUTO='%s'""" % params)
-            elif inputUsuario == 4:
-                self.cursor.execute("""UPDATE PRODUTOS SET vl_venda= '%s' WHERE ID_PRODUTO='%s'""" % params)
-            elif inputUsuario == 5:
+        if self.buscarProduto(cID):
+            while True:
+                print('\n-----------EDITAR-----------')
+                print("(1) - Nome")
+                print("(2) - Fornecedor")
+                print("(3) - Quantidade")
+                print("(4) - Valor")
+                print("(5) - Cancelar")
+                inputUsuario = int(input('Digite a opção escolhida:'))
+                if inputUsuario == 1:
+                    cNovo = input('Digite o novo valor: ')
+                    params = (cNovo, cID)
+                    self.cursor.execute("""UPDATE PRODUTOS SET nome= '%s' WHERE ID_PRODUTO='%s'""" % params)
+                elif inputUsuario == 2:
+                    oFornecedor=fornecedorController()
+                    oFornecedor.listarFornecedor()
+                    cNovo = input('Digite o novo valor: ')
+                    params = (cNovo, cID)
+                    self.cursor.execute("""UPDATE PRODUTOS SET id_fornecedor= '%s' WHERE ID_PRODUTO='%s'""" % params)
+                elif inputUsuario == 3:
+                    cNovo = input('Digite o novo valor: ')
+                    params = (cNovo, cID)
+                    self.cursor.execute("""UPDATE PRODUTOS SET estoque= '%s' WHERE ID_PRODUTO='%s'""" % params)
+                elif inputUsuario == 4:
+                    cNovo = input('Digite o novo valor: ')
+                    params = (cNovo, cID)
+                    self.cursor.execute("""UPDATE PRODUTOS SET vl_venda= '%s' WHERE ID_PRODUTO='%s'""" % params)
+                elif inputUsuario == 5:
+                    break
+                print(f'Produto {cID} alterado com sucesso!')
+                self.connect.commit()
                 break
-            print(f'Produto {cID} alterado com sucesso!')
-            self.connect.commit()
-            break
+        else:
+            print(f"Produto com ID {cID} não encontrado.")
+

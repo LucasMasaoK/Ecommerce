@@ -54,4 +54,10 @@ class fornecedorController:
         if acho!=True:
             print(f"Professor com ID {params} não encontrado.")
 
+    def listarFornecedor(self):
+        query = self.cursor.execute("""SELECT * FROM FORNECEDOR """)
+        for fornecedor in query:
+            print(
+                    f"ID: {fornecedor[0]}, Nome: {fornecedor[1]}, CNPJ: {fornecedor[2]}")
+
 
