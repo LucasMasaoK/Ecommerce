@@ -69,7 +69,13 @@ class produtosController:
 
     def editarProduto(self):
         self.listarProdutos()
-        cID=input('Digite o ID do Produto:')
+        while True:
+            try:
+                cID = int(input('Digite o ID do Produto:'))
+                break
+            except ValueError:
+                print('Valor informado não é um inteiro!')
+                continue
         if self.buscarProduto(cID):
             while True:
                 print('\n-----------EDITAR-----------')
