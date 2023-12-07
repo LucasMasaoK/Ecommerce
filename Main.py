@@ -2,7 +2,6 @@ from Fornecedor import fornecedorController
 from Produto import produtosController
 import Usuario
 import Venda
-
 import Cliente
 import Relatorios
 
@@ -28,7 +27,7 @@ def subMenuFornecedor():
         inputUsuario=int(input('Digite a opção escolhida:'))
         oFornecedorController = fornecedorController()
         if inputUsuario==1:
-            fornecedorController.adicionar()
+            oFornecedorController.adicionar()
         elif inputUsuario == 2:
             continue
         elif inputUsuario == 3:

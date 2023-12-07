@@ -1,8 +1,7 @@
 import sqlite3
 from Fornecedor import fornecedorController
 class TProduto:
-    def __init__(self,pID_produto,pID_fornecedor,pNome,pEstoque,pVL_venda):
-        self.id_produto=pID_produto
+    def __init__(self,pID_fornecedor,pNome,pEstoque,pVL_venda):
         self.id_fornecedor=pID_fornecedor
         self.nome=pNome
         self.estoque=pEstoque
@@ -19,21 +18,34 @@ class produtosController:
         id_fornecedor INTEGER, 
         nome TEXT,
         estoque INTEGER,
-        vl_venda FLOAT)""")
+        vl_venda FLOAT,
+        FOREIGN KEY (id_fornecedor) REFERENCES fornecedor(id_fornecedor)
+        )""")
+        self.oFornecedor = fornecedorController()
 
     def adicionarProduto(self):
-        cID_produto = input("Digite o ID do Produto: ")
-        cID_fornecedor = input("Digite o ID do Fornecedor: ")
-        cNome = input("Digite o nome do Produto: ")
-        cEstoque = input("Digite a quantidade de Estoque: ")
-        cVL_venda = input("Digite o valor de venda R$: ")
-        oProduto=TProduto(cID_produto,cID_fornecedor,cNome,cEstoque,cVL_venda)
-        params=(cID_produto,cID_fornecedor,cNome,cEstoque,cVL_venda)
-        self.cursor.execute(
-            """INSERT INTO PRODUTOS(id_produto,id_fornecedor,nome,estoque,vl_venda) 
-            VALUES ('%s', '%s', '%s', '%s', '%s')""" % params)
-        self.connect.commit()
-        print(f'O {oProduto.nome} foi cadastrado com sucesso!')
+        self.oFornecedor.listarFornecedor()
+        while True:
+            try:
+                cID_fornecedor = int(input("Digite o ID do Fornecedor: "))
+                break
+            except ValueError:
+                print('Valor informado não é um inteiro!')
+                continue
+        if self.oFornecedor.buscarFornecedor(cID_fornecedor):
+            cNome = input("Digite o nome do Produto: ")
+            cEstoque = input("Digite a quantidade de Estoque: ")
+            cVL_venda = input("Digite o valor de venda R$: ")
+            self.oProduto=TProduto(cID_fornecedor,cNome,cEstoque,cVL_venda)
+            params=(self.oProduto.id_fornecedor,self.oProduto.nome,self.oProduto.estoque,self.oProduto.vl_venda)
+            self.cursor.execute(
+                """INSERT INTO PRODUTOS(id_fornecedor,nome,estoque,vl_venda) 
+                VALUES ('%s', '%s', '%s', '%s')""" % params)
+            self.connect.commit()
+            print(f'O {self.oProduto.nome} foi cadastrado com sucesso!')
+        else:
+            print(f"Fornecedor com ID {cID_fornecedor} não encontrado.")
+
 
     def buscarProduto(self,pID):
         acho=''
@@ -90,8 +102,7 @@ class produtosController:
                     params = (cNovo, cID)
                     self.cursor.execute("""UPDATE PRODUTOS SET nome= '%s' WHERE ID_PRODUTO='%s'""" % params)
                 elif inputUsuario == 2:
-                    oFornecedor=fornecedorController()
-                    oFornecedor.listarFornecedor()
+                    self.oFornecedor.listarFornecedor()
                     cNovo = input('Digite o novo valor: ')
                     params = (cNovo, cID)
                     self.cursor.execute("""UPDATE PRODUTOS SET id_fornecedor= '%s' WHERE ID_PRODUTO='%s'""" % params)

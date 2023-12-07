@@ -21,7 +21,7 @@ class fornecedorController:
         oFornecedor = TFornecedor(id, nome, cnpj)
         params=(nome, cnpj)
         self.cursor.execute(
-            f"""insert into fornecedor(nome, cnpj) values (?, ?)""",[params])
+            """insert into fornecedor(nome, cnpj) values ('%s', '%s')""" % params)
         self.connect.commit()
         print(f"Fornecedor {oFornecedor.nome} adicionado com sucesso.")
 
@@ -56,8 +56,19 @@ class fornecedorController:
 
     def listarFornecedor(self):
         query = self.cursor.execute("""SELECT * FROM FORNECEDOR """)
+        print('\n-----------FORNECEDORES-----------')
         for fornecedor in query:
             print(
                     f"ID: {fornecedor[0]}, Nome: {fornecedor[1]}, CNPJ: {fornecedor[2]}")
+        print('\n')
 
-
+    def buscarFornecedor(self,pID):
+        acho=''
+        query=self.cursor.execute("""SELECT * FROM FORNECEDOR WHERE id_fornecedor= '%s' """ % pID)
+        for produto in query:
+            if produto[0] == int(pID):
+                acho = True
+                return True
+                break
+            if acho != True:
+                return False

@@ -1,6 +1,3 @@
-
-
-
-from Produto import produtosController
-oProduto =produtosController()
-oProduto.adicionarProduto()
+from Fornecedor import fornecedorController
+oFornecedor=fornecedorController()
+oFornecedor.adicionar()
