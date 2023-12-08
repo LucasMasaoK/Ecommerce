@@ -12,15 +12,6 @@ class produtosController:
     def __init__(self):
         self.connect = sqlite3.connect('Banco.db')
         self.cursor = self.connect.cursor()
-        self.cursor.execute(
-            """CREATE TABLE IF NOT EXISTS PRODUTOS (
-        id_produto INTEGER PRIMARY KEY AUTOINCREMENT,
-        id_fornecedor INTEGER, 
-        nome TEXT,
-        estoque INTEGER,
-        vl_venda FLOAT,
-        FOREIGN KEY (id_fornecedor) REFERENCES fornecedor(id_fornecedor)
-        )""")
         self.oFornecedor = fornecedorController()
 
     def adicionarProduto(self):
