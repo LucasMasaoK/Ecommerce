@@ -1,9 +1,10 @@
 from Fornecedor import fornecedorController
 from Produto import produtosController
+from Relatorios import Relatorios
 import Usuario
 import Venda
 import Cliente
-import Relatorios
+
 
 def menu():
     print("--------E-COMMERCE DE VENDAS------------")
@@ -88,11 +89,24 @@ def subMenuVenda():
             break
 
 def subMenuRelatório():
-    print("(1) - Cadastrar Produto")
-    print("(2) - Mostrar Produto")
-    print("(3) - Vender produto")
-    print("(4) - Acessar carrinho")
-    inputUsuario = int(input('Digite a opção escolhida:'))
+    while True:
+        print('\n-----------RELATÓRIOS-----------')
+        print("(1) - Vendas por Periodo")
+        print("(2) - Vendas por Vendedor")
+        print("(3) - Vender produto")
+        print("(4) - Acessar carrinho")
+        inputUsuario = int(input('Digite a opção escolhida:'))
+        oRelatorios = Relatorios()
+        if inputUsuario == 1:
+            oRelatorios.vendasPorPeriodo()
+            continue
+        elif inputUsuario == 2:
+            oRelatorios.vendasVendedor()
+            continue
+        elif inputUsuario == 3:
+            continue
+        elif inputUsuario == 4:
+            break
 
 
 
@@ -117,7 +131,6 @@ while True:
         subMenuVenda()
     elif inputUsuario == 5:
         subMenuRelatório()
-        Relatorios.vendasPorCliente(1)
     elif inputUsuario == 6:
         Usuario.login()
     else:
