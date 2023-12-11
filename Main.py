@@ -107,11 +107,6 @@ def subMenuCliente():
         elif inputUsuario == 5:
             break
 
-def subMenuVenda():
-    while True:
-            Venda.subMenu()
-            break
-
 def subMenuRelatório():
     while True:
         print('\n-----------RELATÓRIOS-----------')
@@ -152,7 +147,9 @@ while True:
         RidCliente = input('Digite um ID:')
         Cliente.LocalizaCliente(RidCliente)
     elif inputUsuario == 4:
-        subMenuVenda()
+        while True:
+            Venda.subMenu()
+            break
     elif inputUsuario == 5:
         subMenuRelatório()
     elif inputUsuario == 6:
