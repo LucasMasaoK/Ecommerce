@@ -14,7 +14,8 @@ def menu():
     print("(3) - Cliente")
     print("(4) - Venda")
     print("(5) - Relatório")
-    print('(6) - Trocar Usuário\n')
+    print('(6) - Trocar Usuário')
+    print(('(7) - finalizar programa\n'))
     inputUsuario=int(input('Digite a opção escolhida:'))
     return inputUsuario
 
@@ -72,20 +73,7 @@ def subMenuCliente():
 
 def subMenuVenda():
     while True:
-        print('\n-----------VENDA-----------')
-        print("(1) - Adicionar")
-        print("(2) - Remover")
-        print("(3) - Listar")
-        print("(4) - Menu Principal")
-        inputUsuario = int(input('Digite a opção escolhida:'))
-        if inputUsuario == 1:
             Venda.subMenu()
-            continue
-        elif inputUsuario == 2:
-            continue
-        elif inputUsuario == 3:
-            continue
-        elif inputUsuario == 4:
             break
 
 def subMenuRelatório():
@@ -133,5 +121,7 @@ while True:
         subMenuRelatório()
     elif inputUsuario == 6:
         Usuario.login()
+    elif inputUsuario == 7:
+        break
     else:
         print('Opção inválida, tente novamente')
