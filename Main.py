@@ -71,11 +71,6 @@ def subMenuCliente():
     print("(4) - Menu Principal")
     inputUsuario = int(input('Digite a opção escolhida:'))
 
-def subMenuVenda():
-    while True:
-            Venda.subMenu()
-            break
-
 def subMenuRelatório():
     while True:
         print('\n-----------RELATÓRIOS-----------')
@@ -116,7 +111,9 @@ while True:
         RidCliente = input('Digite um ID:')
         Cliente.LocalizaCliente(RidCliente)
     elif inputUsuario == 4:
-        subMenuVenda()
+        while True:
+            Venda.subMenu()
+            break
     elif inputUsuario == 5:
         subMenuRelatório()
     elif inputUsuario == 6:
