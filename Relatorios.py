@@ -1,5 +1,6 @@
 import sqlite3
 from prettytable import PrettyTable
+import matplotlib.pyplot as grafico
 
 
 class Relatorios:
@@ -29,10 +30,31 @@ class Relatorios:
             params=(cInicial,cFinal)
             self.query=self.cursor.execute("""SELECT V.ID_CLIENTE, V.ID_FUNCIONARIO, V.ID_FORMAPGTO, V.VL_TOTAL, V.DESCONTO, V.DATA_VENDA FROM VENDAS AS V
 WHERE V.DATA_VENDA BETWEEN '%s' AND '%s'""" % params)
+            vendedor=[]
+            vlTotal=[]
             pretty = PrettyTable(["VENDA", "VENDEDOR", "VALOR TOTAL"])
             for vendas in self.query:
                 pretty.add_row([vendas[0],vendas[1],vendas[3]])
                 #print(f'Venda {vendas[0]}, Funcionario:{vendas[1]}, Valor Total:{vendas[3]}')
             print(pretty)
+            print("(1) - Sim")
+            print("(2) - Não")
+            cEscolha=input('Deseja gerar um relatório gráfico?')
+            if int(cEscolha)==1:
+                vendedor=[]
+                vlTotal=[]
+                self.query = self.cursor.execute("""SELECT F.NOME, sum(V.VL_TOTAL)FROM VENDAS AS V
+                JOIN FUNCIONARIO AS F ON F.ID_FUNCIONARIO=V.ID_FUNCIONARIO
+                WHERE V.DATA_VENDA BETWEEN '%s' AND '%s' GROUP BY V.ID_FUNCIONARIO""" % params)
+                vendedor = []
+                vlTotal = []
+                for vendas in self.query:
+                    vendedor.append(vendas[0])
+                    vlTotal.append(vendas[1])
+                grafico.ylabel('Valor da Venda')
+                grafico.xlabel('Vendedores')
+                grafico.bar(vendedor,vlTotal)
+                grafico.show()
+
 
 
