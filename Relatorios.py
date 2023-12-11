@@ -20,8 +20,22 @@ class Relatorios:
         self.query=self.cursor.execute("""SELECT V.ID_CLIENTE, V.ID_FUNCIONARIO, V.ID_FORMAPGTO, V.VL_TOTAL, V.DESCONTO, V.DATA_VENDA FROM VENDAS AS V
                                         JOIN FUNCIONARIO AS F ON V.ID_FUNCIONARIO= F.ID_FUNCIONARIO
                                         WHERE F.ID_FUNCIONARIO='%s'  """ % cVendor)
+        pretty = PrettyTable(["VENDA", "VENDEDOR", "VALOR TOTAL"])
+        data = []
+        vlTotal = []
         for vendas in self.query:
-            print(f'Venda {vendas[0]}, Funcionario:{vendas[1]}, Valor Total:{vendas[3]}')
+            pretty.add_row([vendas[0], vendas[1], vendas[3]])
+            data.append(vendas[5])
+            vlTotal.append(vendas[3])
+        print(pretty)
+        print("(1) - Sim")
+        print("(2) - Não")
+        cEscolha = input('Deseja gerar um relatório gráfico?')
+        if int(cEscolha) == 1:
+            grafico.ylabel('Valor da Venda')
+            grafico.xlabel('Data')
+            grafico.plot(data, vlTotal)
+            grafico.show()
 
     def vendasPorPeriodo(self):
             print('\n-----------Data Inicial-----------')
@@ -35,7 +49,6 @@ WHERE V.DATA_VENDA BETWEEN '%s' AND '%s'""" % params)
             pretty = PrettyTable(["VENDA", "VENDEDOR", "VALOR TOTAL"])
             for vendas in self.query:
                 pretty.add_row([vendas[0],vendas[1],vendas[3]])
-                #print(f'Venda {vendas[0]}, Funcionario:{vendas[1]}, Valor Total:{vendas[3]}')
             print(pretty)
             print("(1) - Sim")
             print("(2) - Não")
