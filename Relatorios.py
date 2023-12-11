@@ -1,7 +1,7 @@
 import sqlite3
 from prettytable import PrettyTable
 import matplotlib.pyplot as grafico
-
+from Cliente import clienteController
 
 class Relatorios:
     def __init__(self):
@@ -43,7 +43,7 @@ class Relatorios:
             cFinal = input('Digite a data Final:')
             params=(cInicial,cFinal)
             self.query=self.cursor.execute("""SELECT V.ID_CLIENTE, V.ID_FUNCIONARIO, V.ID_FORMAPGTO, V.VL_TOTAL, V.DESCONTO, V.DATA_VENDA FROM VENDAS AS V
-WHERE V.DATA_VENDA BETWEEN '%s' AND '%s'""" % params)
+            WHERE V.DATA_VENDA BETWEEN '%s' AND '%s'""" % params)
             vendedor=[]
             vlTotal=[]
             pretty = PrettyTable(["VENDA", "VENDEDOR", "VALOR TOTAL"])

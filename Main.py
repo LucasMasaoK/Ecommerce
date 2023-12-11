@@ -1,5 +1,6 @@
 from Fornecedor import fornecedorController
 from Produto import produtosController
+from Cliente import *
 from Relatorios import Relatorios
 import Usuario
 import Venda
@@ -23,21 +24,34 @@ def subMenuFornecedor():
     while True:
         print('\n-----------FORNECEDOR-----------')
         print("(1) - Adicionar")
-        print("(2) - Remover")
+        print("(2) - Deletar")
         print("(3) - Listar")
-        print("(4) - Menu Principal")
-        inputUsuario=int(input('Digite a opção escolhida:'))
+        print("(4) - Editar")
+        print("(5) - Menu Principal")
         oFornecedorController = fornecedorController()
+        inputUsuario=int(input('Digite a opção escolhida:'))
+
         if inputUsuario==1:
-            oFornecedorController.adicionar()
+            oFornecedorController.adicionarFornecedor()
+            continue
+
         elif inputUsuario == 2:
+            oFornecedorController.deletarFornecedor()
             continue
+
         elif inputUsuario == 3:
+            oFornecedorController.listarFornecedores()
             continue
+
         elif inputUsuario == 4:
+            oFornecedorController.editarFornecedor()
+            continue
+
+        elif inputUsuario == 5:
             break
         else:
             print('Opção inválida, tente novamente')
+
 
 def subMenuProduto():
     while True:
@@ -64,12 +78,34 @@ def subMenuProduto():
 
 
 def subMenuCliente():
-    print('\n-----------CLIENTE-----------')
-    print("(1) - Adicionar")
-    print("(2) - Remover")
-    print("(3) - Listar")
-    print("(4) - Menu Principal")
-    inputUsuario = int(input('Digite a opção escolhida:'))
+    while True:
+        print('\n-----------CLIENTE-----------')
+        print("(1) - Adicionar")
+        print("(2) - Deletar")
+        print("(3) - Listar")
+        print("(4) - Editar")
+        print("(5) - Menu Principal")
+        oClienteController = clienteController()
+        inputUsuario = int(input('Digite a opção escolhida:'))
+
+        if inputUsuario == 1:
+            oClienteController.adicionarCliente()
+            continue
+
+        elif inputUsuario == 2:
+            oClienteController.deletarCliente()
+            continue
+
+        elif inputUsuario == 3:
+            oClienteController.listarClientes()
+            continue
+
+        elif inputUsuario == 4:
+            oClienteController.editarCliente()
+            continue
+
+        elif inputUsuario == 5:
+            break
 
 def subMenuVenda():
     while True:

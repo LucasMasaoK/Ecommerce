@@ -15,7 +15,7 @@ class produtosController:
         self.oFornecedor = fornecedorController()
 
     def adicionarProduto(self):
-        self.oFornecedor.listarFornecedor()
+        self.oFornecedor.listarFornecedores()
         while True:
             try:
                 cID_fornecedor = int(input("Digite o ID do Fornecedor: "))
@@ -37,25 +37,7 @@ class produtosController:
         else:
             print(f"Fornecedor com ID {cID_fornecedor} não encontrado.")
 
-
-    def buscarProduto(self,pID):
-        acho=''
-        query=self.cursor.execute("""SELECT * FROM PRODUTOS WHERE ID_PRODUTO= '%s' """ % pID)
-        for produto in query:
-            if produto[0] == int(pID):
-                acho = True
-                return True
-                break
-            if acho != True:
-                return False
-
-    def listarProdutos(self):
-        query = self.cursor.execute("""SELECT * FROM PRODUTOS """)
-        for produto in query:
-            print(
-                    f"ID: {produto[0]}, Nome: {produto[2]}, VL Venda: {produto[4]}")
-
-    def removerProduto(self):
+    def deletarProduto(self):
         acho = ''
         params = input("Digite o ID do Produto: ")
         query = self.cursor.execute("""SELECT * FROM PRODUTOS WHERE ID_PRODUTO='%s'""" % params)
@@ -70,6 +52,13 @@ class produtosController:
             if acho != True:
                 print(f"Produto com ID {params} não encontrado.")
 
+    def listarProdutos(self):
+        query = self.cursor.execute("""SELECT * FROM PRODUTOS """)
+        print('\n-----------PRODUTOS-----------')
+        for produto in query:
+            print(
+                    f"ID: {produto[0]}, Nome: {produto[2]}, VL Venda: {produto[4]}")
+        print('\n')
     def editarProduto(self):
         self.listarProdutos()
         while True:
@@ -112,4 +101,15 @@ class produtosController:
                 break
         else:
             print(f"Produto com ID {cID} não encontrado.")
+
+    def buscarProduto(self,pID):
+        acho=''
+        query=self.cursor.execute("""SELECT * FROM PRODUTOS WHERE ID_PRODUTO= '%s' """ % pID)
+        for produto in query:
+            if produto[0] == int(pID):
+                acho = True
+                return True
+                break
+            if acho != True:
+                return False
 
