@@ -1,4 +1,5 @@
 import sqlite3
+from prettytable import PrettyTable
 
 class TUsuario:
     def __init__(self, cId, cNome,cEmail, cSenha, cDtNascimento, cCpf, cEndereco):
@@ -49,12 +50,11 @@ class usuarioController:
             print(f"Cliente com ID {params} não encontrado.")
 
     def listarClientes(self):
-        query = self.cursor.execute("""SELECT * FROM USUARIO """)
-        print('\n-----------CLIENTES-----------')
-        for cliente in query:
-            print(
-                f"ID: {cliente[0]}, Nome: {cliente[1]}, Data de Nascimento: {cliente[2]}, CPF: {cliente[3]}, Endereço: {cliente[4]}")
-        print('\n')
+        self.query = self.cursor.execute("""SELECT * FROM USUARIO """)
+        pretty = PrettyTable(["ID CLIENTE", "NOME", "DATA DE NASCIMENTO", "CPF", "ENDEREÇO"])
+        for cliente in self.query:
+            pretty.add_row([cliente[0], cliente[1], cliente[2], cliente[3], cliente[4]])
+        print(pretty)
 
     def editarCliente(self):
         self.listarClientes()
@@ -125,10 +125,10 @@ class usuarioController:
     def login(self):
         sair=False
         while sair!=True:
-            print(" Bem vindo ao sistema de usuário ")
+            print("Bem vindo ao sistema de usuário! \n")
             print('1 - Faça o Login')
             print('2 - Criar Usuário')
-            op=int(input('Digite a opção escolhida:'))
+            op=int(input('\nDigite a opção escolhida:'))
             if op ==1:
                 email = input('Digite seu email: ')
                 if  self.buscarCliente(email) == True:

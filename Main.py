@@ -15,7 +15,7 @@ def menu():
     print("(4) - Venda")
     print("(5) - Relatório")
     print('(6) - Trocar Usuário')
-    print(('(7) - finalizar programa\n'))
+    print(('(7) - Finalizar Programa\n'))
     inputUsuario=int(input('Digite a opção escolhida:'))
     return inputUsuario
 
@@ -66,7 +66,7 @@ def subMenuProduto():
             oProdutoController.adicionarProduto()
             continue
         elif inputUsuario == 2:
-            oProdutoController.removerProduto()
+            oProdutoController.deletarProduto()
             continue
         elif inputUsuario == 3:
             oProdutoController.listarProdutos()
@@ -74,6 +74,8 @@ def subMenuProduto():
         elif inputUsuario == 4:
             oProdutoController.editarProduto()
             continue
+        elif inputUsuario == 5:
+            break
 
 
 def subMenuCliente():

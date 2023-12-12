@@ -1,4 +1,5 @@
 import sqlite3
+from prettytable import PrettyTable
 from Fornecedor import fornecedorController
 class TProduto:
     def __init__(self,pID_fornecedor,pNome,pEstoque,pVL_venda):
@@ -53,12 +54,11 @@ class produtosController:
                 print(f"Produto com ID {params} não encontrado.")
 
     def listarProdutos(self):
-        query = self.cursor.execute("""SELECT * FROM PRODUTOS """)
-        print('\n-----------PRODUTOS-----------')
-        for produto in query:
-            print(
-                    f"ID: {produto[0]}, Nome: {produto[2]}, VL Venda: {produto[4]}")
-        print('\n')
+        self.query = self.cursor.execute("""SELECT * FROM PRODUTOS """)
+        pretty = PrettyTable(["ID PRODUTO", "ID FORNECEDOR", "PRODUTO", "QUANTIDADE", "PREÇO"])
+        for produto in self.query:
+            pretty.add_row([produto[0], produto[1], produto[2], produto[3], produto[4]])
+        print(pretty)
     def editarProduto(self):
         self.listarProdutos()
         while True:

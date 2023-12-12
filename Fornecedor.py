@@ -1,4 +1,5 @@
 import sqlite3
+from prettytable import PrettyTable
 
 class TFornecedor:
     def __init__(self, pId, pNome, pCNPJ):
@@ -40,12 +41,11 @@ class fornecedorController:
             print(f"Professor com ID {params} não encontrado.")
 
     def listarFornecedores(self):
-        query = self.cursor.execute("""SELECT * FROM FORNECEDOR """)
-        print('\n-----------FORNECEDORES-----------')
-        for fornecedor in query:
-            print(
-                    f"ID: {fornecedor[0]}, Nome: {fornecedor[1]}, CNPJ: {fornecedor[2]}")
-        print('\n')
+        self.query = self.cursor.execute("""SELECT * FROM FORNECEDOR """)
+        pretty = PrettyTable(["ID FORNECEDOR", "NOME","CNPJ"])
+        for fornecedor in self.query:
+            pretty.add_row([fornecedor[0], fornecedor[1], fornecedor[2]])
+        print(pretty)
 
     def editarFornecedor(self):
         self.listarFornecedores()
