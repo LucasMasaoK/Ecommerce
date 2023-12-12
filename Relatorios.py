@@ -1,7 +1,7 @@
 import sqlite3
 from prettytable import PrettyTable
 import matplotlib.pyplot as grafico
-from Cliente import clienteController
+from Usuario import *
 
 class Relatorios:
     def __init__(self):

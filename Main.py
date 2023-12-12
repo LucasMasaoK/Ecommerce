@@ -1,10 +1,9 @@
 from Fornecedor import fornecedorController
 from Produto import produtosController
-from Cliente import *
+from Usuario import *
 from Relatorios import Relatorios
-import Usuario
 import Venda
-import Cliente
+
 
 
 def menu():
@@ -85,9 +84,7 @@ def subMenuCliente():
         print("(3) - Listar")
         print("(4) - Editar")
         print("(5) - Menu Principal")
-        oClienteController = clienteController()
         inputUsuario = int(input('Digite a opção escolhida:'))
-
         if inputUsuario == 1:
             oClienteController.adicionarCliente()
             continue
@@ -128,8 +125,8 @@ def subMenuRelatório():
             break
 
 
-
-_usuarioLogado=Usuario.login()
+oClienteController = usuarioController()
+_usuarioLogado=oClienteController.login()
 
 while True:
     if _usuarioLogado:
@@ -143,9 +140,7 @@ while True:
     elif inputUsuario == 2:
         subMenuProduto()
     elif inputUsuario == 3:
-
-        RidCliente = input('Digite um ID:')
-        Cliente.LocalizaCliente(RidCliente)
+        subMenuCliente()
     elif inputUsuario == 4:
         while True:
             Venda.subMenu()
@@ -153,7 +148,7 @@ while True:
     elif inputUsuario == 5:
         subMenuRelatório()
     elif inputUsuario == 6:
-        Usuario.login()
+        oClienteController.login()
     elif inputUsuario == 7:
         break
     else:
