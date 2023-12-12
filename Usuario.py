@@ -52,9 +52,9 @@ class usuarioController:
 
     def listarClientes(self):
         self.query = self.cursor.execute("""SELECT * FROM USUARIO WHERE TIPO='C'""")
-        pretty = PrettyTable(["ID CLIENTE", "NOME", "DATA DE NASCIMENTO", "CPF", "ENDEREÇO"])
+        pretty = PrettyTable(["ID CLIENTE", "NOME", "EMAIL", "SENHA", "TIPO", "DATA NASCIMENTO", "CPF", "ENDEREÇO"])
         for cliente in self.query:
-            pretty.add_row([cliente[0], cliente[1], cliente[2], cliente[3], cliente[4]])
+            pretty.add_row([cliente[0], cliente[1], cliente[2], cliente[3], cliente[4], cliente[5], cliente[6], cliente[7]])
         print(pretty)
         acho = ''
         while True:
