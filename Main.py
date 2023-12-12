@@ -147,9 +147,7 @@ while True:
         RidCliente = input('Digite um ID:')
         Cliente.LocalizaCliente(RidCliente)
     elif inputUsuario == 4:
-        while True:
             Venda.subMenu()
-            break
     elif inputUsuario == 5:
         subMenuRelatório()
     elif inputUsuario == 6:
