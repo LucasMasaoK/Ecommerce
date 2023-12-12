@@ -7,19 +7,20 @@ class Relatorios:
     def __init__(self):
         self.connect = sqlite3.connect('Banco.db')
         self.cursor = self.connect.cursor()
+        self.oUsuario= usuarioController()
 
 
     def vendasVendedor(self):
         while True:
             try:
-                cVendor=input('Digite o ID do Vendedor:')
+                cVendor=self.oUsuario.listarFuncionario()
                 break
             except ValueError:
                 print('Valor informado não é um inteiro')
                 continue
         self.query=self.cursor.execute("""SELECT V.ID_CLIENTE, V.ID_FUNCIONARIO, V.ID_FORMAPGTO, V.VL_TOTAL, V.DESCONTO, V.DATA_VENDA FROM VENDAS AS V
-                                        JOIN FUNCIONARIO AS F ON V.ID_FUNCIONARIO= F.ID_FUNCIONARIO
-                                        WHERE F.ID_FUNCIONARIO='%s'  """ % cVendor)
+JOIN USUARIO AS U ON U.ID_CLIENTE= V.ID_CLIENTE
+WHERE V.ID_FUNCIONARIO='%s' """ % cVendor)
         pretty = PrettyTable(["VENDA", "VENDEDOR", "VALOR TOTAL"])
         data = []
         vlTotal = []
