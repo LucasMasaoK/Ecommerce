@@ -143,5 +143,3 @@ def buscarFuncionario():
                 return params
         if acho != True:
             print(f"Funcionario com ID {params} não encontrado.")
-
-subMenu()
