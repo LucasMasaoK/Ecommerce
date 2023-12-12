@@ -142,9 +142,7 @@ while True:
     elif inputUsuario == 3:
         subMenuCliente()
     elif inputUsuario == 4:
-        while True:
             Venda.subMenu()
-            break
     elif inputUsuario == 5:
         subMenuRelatório()
     elif inputUsuario == 6:

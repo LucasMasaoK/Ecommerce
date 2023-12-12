@@ -1,7 +1,6 @@
 import sqlite3
 import datetime
 
-
 def addItem():
     connection = sqlite3.connect('Banco.db')
     cursor = connection.cursor()
@@ -10,43 +9,43 @@ def addItem():
     produtos = cursor.fetchall()
     for produto in produtos:
         print(f"ID: {produto[0]}, Nome: {produto[2]}, Preço: R${produto[4]}")
+    while True:
+        id_produto = int(input('Digite o ID do produto: '))
 
-    id_produto = int(input('Digite o ID do produto: '))
+        cursor.execute("SELECT * FROM Produtos WHERE id_produto=?", (id_produto,))
+        produto = cursor.fetchone()
 
-    cursor.execute("SELECT * FROM Produtos WHERE id_produto=?", (id_produto,))
-    produto = cursor.fetchone()
+        if produto:
+            qtde = int(input('Digite a quantidade: '))
+            estoque = produto[3]
 
-    if produto:
-        qtde = int(input('Digite a quantidade: '))
-        estoque = produto[3]
+            if qtde <= estoque:
+                novo_estoque = estoque - qtde
+                cursor.execute("UPDATE Produtos SET estoque=? WHERE id_produto=?", (novo_estoque, id_produto))
+                connection.commit()
 
-        if qtde <= estoque:
-            novo_estoque = estoque - qtde
-            cursor.execute("UPDATE Produtos SET estoque=? WHERE id_produto=?", (novo_estoque, id_produto))
-            connection.commit()
+                preco_unidade = produto[4]
+                preco_item_total = qtde * preco_unidade
 
-            preco_unidade = produto[4]
-            preco_item_total = qtde * preco_unidade
+                with open('comprovante.txt', 'a') as arquivo_comprovante:
+                    arquivo_comprovante.write(f'Nome do Produto: {produto[2]}\n')
+                    arquivo_comprovante.write(f'Quantidade: {qtde}\n')
+                    arquivo_comprovante.write(f'Preço Total do Produto: R${preco_item_total}\n')
+                    arquivo_comprovante.write('-' * 30 + '\n')
+                return preco_item_total
 
-            with open('comprovante.txt', 'a') as arquivo_comprovante:
-                arquivo_comprovante.write(f'Nome do Produto: {produto[2]}\n')
-                arquivo_comprovante.write(f'Quantidade: {qtde}\n')
-                arquivo_comprovante.write(f'Preço Total do Produto: R${preco_item_total}\n')
-                arquivo_comprovante.write('-' * 30 + '\n')
-
-            print('Produto adicionado à venda com sucesso!\n')
+                print('Produto adicionado à venda com sucesso!\n')
+            else:
+                print('Não há estoque suficiente para suprir a quantidade desejada.')
         else:
-            print('Não há estoque suficiente para suprir a quantidade desejada.')
-    else:
-        print('ID do produto não localizado.')
+            print('ID do produto não localizado.')
 
-    connection.close()
-    return preco_item_total
 
 
 def subMenu():
     preco_total = 0
     sairSub = False
+    global preco_item_total
     while not sairSub:
         print('============QUAL A OPÇÃO DESEJADA?================')
         print(f'1- Adicionar Mais itens\n'
@@ -91,7 +90,7 @@ def subMenu():
 
                 data_venda = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 ID_CLIENTE = 1  # Substitua por seu código para obter o ID do cliente
-                ID_FUNCIONARIO = 1  # Substitua 1 pelo ID do funcionário responsável pela venda
+                ID_FUNCIONARIO = buscarFuncionario()
 
                 cursor.execute("""
                     INSERT INTO VENDAS (ID_CLIENTE, ID_FUNCIONARIO, ID_FORMAPGTO, VL_TOTAL, DESCONTO, DATA_VENDA)
@@ -128,3 +127,19 @@ try:
         arquivo_comprovante.write('')
 except FileNotFoundError:
     print('Arquivo comprovante.txt não encontrado.')
+
+def buscarFuncionario():
+    while True:
+        connection = sqlite3.connect('Banco.db')
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM FUNCIONARIO")
+        acho = ''
+        params = input('Digite o ID do funcionário:')
+        dados = cursor.execute("SELECT * FROM FUNCIONARIO WHERE ID_FUNCIONARIO=?", [params])
+        for funcionario in dados:
+            if funcionario[0] == int(params):
+                print(
+                    f"Funcionário encontrado - ID: {funcionario[0]}, Nome: {funcionario[1]}, CPF: {funcionario[2]}")
+                return params
+        if acho != True:
+            print(f"Funcionario com ID {params} não encontrado.")
