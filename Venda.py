@@ -1,7 +1,6 @@
 import sqlite3
 import datetime
 
-
 def addItem():
     connection = sqlite3.connect('Banco.db')
     cursor = connection.cursor()
@@ -39,14 +38,13 @@ def addItem():
             print('Não há estoque suficiente para suprir a quantidade desejada.')
     else:
         print('ID do produto não localizado.')
-
-    connection.close()
     return preco_item_total
 
 
 def subMenu():
     preco_total = 0
     sairSub = False
+    global preco_item_total
     while not sairSub:
         print('============QUAL A OPÇÃO DESEJADA?================')
         print(f'1- Adicionar Mais itens\n'
@@ -91,7 +89,7 @@ def subMenu():
 
                 data_venda = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 ID_CLIENTE = 1  # Substitua por seu código para obter o ID do cliente
-                ID_FUNCIONARIO = 1  # Substitua 1 pelo ID do funcionário responsável pela venda
+                ID_FUNCIONARIO = buscarFuncionario()
 
                 cursor.execute("""
                     INSERT INTO VENDAS (ID_CLIENTE, ID_FUNCIONARIO, ID_FORMAPGTO, VL_TOTAL, DESCONTO, DATA_VENDA)
@@ -128,3 +126,21 @@ try:
         arquivo_comprovante.write('')
 except FileNotFoundError:
     print('Arquivo comprovante.txt não encontrado.')
+
+def buscarFuncionario():
+    while True:
+        connection = sqlite3.connect('Banco.db')
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM FUNCIONARIO")
+        acho = ''
+        params = input('Digite o ID do funcionário:')
+        dados = cursor.execute("SELECT * FROM FUNCIONARIO WHERE ID_FUNCIONARIO=?", [params])
+        for funcionario in dados:
+            if funcionario[0] == int(params):
+                print(
+                    f"Funcionário encontrado - ID: {funcionario[0]}, Nome: {funcionario[1]}, CPF: {funcionario[2]}")
+                return params
+        if acho != True:
+            print(f"Funcionario com ID {params} não encontrado.")
+
+subMenu()
