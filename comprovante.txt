@@ -1,0 +1,7 @@
+Nome do Produto: MOUSE
+Quantidade: 1
+Preço Total do Produto: R$90.0
+------------------------------
+Forma de Pagamento: 1
+Valor com Desconto: R$90.0
+------------------------------

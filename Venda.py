@@ -1,5 +1,6 @@
 import sqlite3
 import datetime
+from Usuario import *
 
 def addItem():
     connection = sqlite3.connect('Banco.db')
@@ -89,8 +90,9 @@ def subMenu():
 
 
                 data_venda = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                ID_CLIENTE = 1  # Substitua por seu código para obter o ID do cliente
-                ID_FUNCIONARIO = buscarFuncionario()
+                oUsuario = usuarioController()
+                ID_CLIENTE = oUsuario.listarClientes()
+                ID_FUNCIONARIO = oUsuario.listarFuncionario()
 
                 cursor.execute("""
                     INSERT INTO VENDAS (ID_CLIENTE, ID_FUNCIONARIO, ID_FORMAPGTO, VL_TOTAL, DESCONTO, DATA_VENDA)
@@ -128,18 +130,4 @@ try:
 except FileNotFoundError:
     print('Arquivo comprovante.txt não encontrado.')
 
-def buscarFuncionario():
-    while True:
-        connection = sqlite3.connect('Banco.db')
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM FUNCIONARIO")
-        acho = ''
-        params = input('Digite o ID do funcionário:')
-        dados = cursor.execute("SELECT * FROM FUNCIONARIO WHERE ID_FUNCIONARIO=?", [params])
-        for funcionario in dados:
-            if funcionario[0] == int(params):
-                print(
-                    f"Funcionário encontrado - ID: {funcionario[0]}, Nome: {funcionario[1]}, CPF: {funcionario[2]}")
-                return params
-        if acho != True:
-            print(f"Funcionario com ID {params} não encontrado.")
+

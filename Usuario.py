@@ -2,11 +2,12 @@ import sqlite3
 from prettytable import PrettyTable
 
 class TUsuario:
-    def __init__(self, cId, cNome,cEmail, cSenha, cDtNascimento, cCpf, cEndereco):
+    def __init__(self, cId, cNome,cEmail, cSenha,cTipo, cDtNascimento, cCpf, cEndereco):
         self.id = cId
         self.nome = cNome
         self.email = cEmail
         self.senha = cSenha
+        self.tipo=cTipo
         self.dt_nascimento = cDtNascimento
         self.cpf = cCpf
         self.endereco = cEndereco
@@ -16,21 +17,21 @@ class usuarioController:
     def __init__(self):
         self.connect = sqlite3.connect('Banco.db')
         self.cursor = self.connect.cursor()
-        self.usuarios = {"admin": ["admin"]}
-        self.logado = ["log"]
+
 
     def adicionarCliente(self):
         nome = input('Digite o Nome do Cliente:')
         email = input('Digite o Email :')
         senha = input('Digite a senha :')
+        tipo= input('Digite o Tipo: ')
         dt_nascimento = input('Digite a Data de Nascimento do Cliente:')
         cpf = input('Digite o CPF do Cliente:')
         endereco = input('Digite o Endereço do Cliente:')
-        oUsuario = TUsuario(id, nome, email, senha, dt_nascimento, cpf, endereco)
-        params = (oUsuario.nome,oUsuario.email, oUsuario.senha, oUsuario.dt_nascimento, oUsuario.cpf, oUsuario.endereco)
+        oUsuario = TUsuario(id, nome, email, senha,tipo, dt_nascimento, cpf, endereco)
+        params = (oUsuario.nome,oUsuario.email, oUsuario.senha,oUsuario.tipo, oUsuario.dt_nascimento, oUsuario.cpf, oUsuario.endereco)
         self.cursor.execute(
-            """insert into USUARIO (NOME, EMAIL,  SENHA,  DT_NASCIMENTO, CPF, ENDERECO)
-  values (?, ?, ?, ?, ?, ?)""", params)
+            """insert into USUARIO (NOME, EMAIL,  SENHA, TIPO, DT_NASCIMENTO, CPF, ENDERECO)
+  values (?, ?, ?, ?, ?, ?, ?)""", params)
         self.connect.commit()
         print(f"Cliente {oUsuario.nome} adicionado com sucesso.")
 
@@ -50,11 +51,36 @@ class usuarioController:
             print(f"Cliente com ID {params} não encontrado.")
 
     def listarClientes(self):
-        self.query = self.cursor.execute("""SELECT * FROM USUARIO """)
+        self.query = self.cursor.execute("""SELECT * FROM USUARIO WHERE TIPO='C'""")
         pretty = PrettyTable(["ID CLIENTE", "NOME", "DATA DE NASCIMENTO", "CPF", "ENDEREÇO"])
         for cliente in self.query:
             pretty.add_row([cliente[0], cliente[1], cliente[2], cliente[3], cliente[4]])
         print(pretty)
+        acho = ''
+        while True:
+            params = input('Digite o ID do Cliente:')
+            dados = self.cursor.execute("SELECT * FROM USUARIO WHERE ID_CLIENTE=?", [params])
+            for funcionario in dados:
+                if funcionario[0] == int(params):
+                    return funcionario[0]
+            if acho != True:
+                print(f"Cliente com ID {params} não encontrado.")
+
+    def listarFuncionario(self):
+        self.query = self.cursor.execute("""SELECT * FROM USUARIO WHERE TIPO='F'""")
+        pretty = PrettyTable(["ID CLIENTE", "NOME", "DATA DE NASCIMENTO", "CPF", "ENDEREÇO"])
+        for cliente in self.query:
+            pretty.add_row([cliente[0], cliente[1], cliente[2], cliente[3], cliente[4]])
+        print(pretty)
+        acho = ''
+        while True:
+            params = input('Digite o ID do funcionário:')
+            dados = self.cursor.execute("SELECT * FROM USUARIO WHERE ID_CLIENTE=?", [params])
+            for funcionario in dados:
+                if funcionario[0] == int(params):
+                    return funcionario[0]
+            if acho != True:
+                print(f"Funcionario com ID {params} não encontrado.")
 
     def editarCliente(self):
         self.listarClientes()
@@ -134,8 +160,7 @@ class usuarioController:
                 if  self.buscarCliente(email) == True:
                     senha = input('Digite sua senha: ')
                     if self.validaSenha(senha) == True:
-                        print(f"Login bem-sucedido!\n Bem vindo {email}")
-                        self.logado[0]=email
+                        print(f"Login bem-sucedido!\n")
                         return True
                     else:
                         print('Usuario ou senha Incorretos\n')
