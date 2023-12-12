@@ -9,36 +9,36 @@ def addItem():
     produtos = cursor.fetchall()
     for produto in produtos:
         print(f"ID: {produto[0]}, Nome: {produto[2]}, Preço: R${produto[4]}")
-    while True:
-        id_produto = int(input('Digite o ID do produto: '))
 
-        cursor.execute("SELECT * FROM Produtos WHERE id_produto=?", (id_produto,))
-        produto = cursor.fetchone()
+    id_produto = int(input('Digite o ID do produto: '))
 
-        if produto:
-            qtde = int(input('Digite a quantidade: '))
-            estoque = produto[3]
+    cursor.execute("SELECT * FROM Produtos WHERE id_produto=?", (id_produto,))
+    produto = cursor.fetchone()
 
-            if qtde <= estoque:
-                novo_estoque = estoque - qtde
-                cursor.execute("UPDATE Produtos SET estoque=? WHERE id_produto=?", (novo_estoque, id_produto))
-                connection.commit()
+    if produto:
+        qtde = int(input('Digite a quantidade: '))
+        estoque = produto[3]
 
-                preco_unidade = produto[4]
-                preco_item_total = qtde * preco_unidade
+        if qtde <= estoque:
+            novo_estoque = estoque - qtde
+            cursor.execute("UPDATE Produtos SET estoque=? WHERE id_produto=?", (novo_estoque, id_produto))
+            connection.commit()
 
-                with open('comprovante.txt', 'a') as arquivo_comprovante:
-                    arquivo_comprovante.write(f'Nome do Produto: {produto[2]}\n')
-                    arquivo_comprovante.write(f'Quantidade: {qtde}\n')
-                    arquivo_comprovante.write(f'Preço Total do Produto: R${preco_item_total}\n')
-                    arquivo_comprovante.write('-' * 30 + '\n')
+            preco_unidade = produto[4]
+            preco_item_total = qtde * preco_unidade
 
-                print('Produto adicionado à venda com sucesso!\n')
-            else:
-                print('Não há estoque suficiente para suprir a quantidade desejada.')
+            with open('comprovante.txt', 'a') as arquivo_comprovante:
+                arquivo_comprovante.write(f'Nome do Produto: {produto[2]}\n')
+                arquivo_comprovante.write(f'Quantidade: {qtde}\n')
+                arquivo_comprovante.write(f'Preço Total do Produto: R${preco_item_total}\n')
+                arquivo_comprovante.write('-' * 30 + '\n')
+
+            print('Produto adicionado à venda com sucesso!\n')
         else:
-            print('ID do produto não localizado.')
-        return preco_item_total
+            print('Não há estoque suficiente para suprir a quantidade desejada.')
+    else:
+        print('ID do produto não localizado.')
+    return preco_item_total
 
 
 def subMenu():
